@@ -1,25 +1,26 @@
----  
-描述：Zed 是一款支持多种 Git 功能的文本编辑器  
-标题：Zed 编辑器 Git 集成文档  
+---
+description: Zed 是一款支持多种 Git 功能的文本编辑器
+title: Zed 编辑器 Git 集成文档
+---
 
-# Git  
+# Git
 
-Zed 目前提供了一套基础的 Git 功能，未来将支持更多高级功能，例如冲突解决工具、逐行暂存等。  
+Zed 目前提供了一套基础的 Git 功能，未来将支持更多高级功能，例如冲突解决工具、逐行暂存等。
 
-以下是当前支持的所有功能概览：  
+以下是当前支持的所有功能概览：
 
-- 提交  
-- 暂存、推送、拉取和获取  
-- 项目差异：所有更改的多缓冲区视图  
-- 缓冲区和编辑器滚动条中的差异指示器  
-- 编辑器中未暂存更改的内联差异切换和还原  
-- 项目面板中的 Git 状态显示  
-- 分支创建与切换  
-- Git 追溯查看  
+- 提交
+- 暂存、推送、拉取和获取
+- 项目差异：所有更改的多缓冲区视图
+- 缓冲区和编辑器滚动条中的差异指示器
+- 编辑器中未暂存更改的内联差异切换和还原
+- 项目面板中的 Git 状态显示
+- 分支创建与切换
+- Git 追溯查看
 
-## Git 面板  
+## Git 面板
 
-Git 面板可让您全面了解工作树和 Git 暂存区的状态。  
+Git 面板可让您全面了解工作树和 Git 暂存区的状态。
 
 您可以使用 {#action git_panel::ToggleFocus} 或点击状态栏中的 Git 图标来打开 Git 面板。
 
@@ -109,10 +110,10 @@ Zed 与主流 Git 托管服务平台深度集成，可将 Git 提交哈希值及
 [SourceHut](https://sr.ht)
 [Codeberg](https://codeberg.org)
 
-Zed还提供"复制永久链接"功能，可生成指向Git托管服务中代码片段的永久链接。  
-这类链接适用于分享特定提交中某文件的指定行或行范围。  
-您可以通过以下方式触发此操作：在[命令面板](./getting-started.md#command-palette)中搜索`permalink`；  
-创建[custom key bindings](key-bindings.md#custom-key-bindings)绑定至`editor::CopyPermalinkToLine`或`editor::OpenPermalinkToLine`操作；  
+Zed还提供"复制永久链接"功能，可生成指向Git托管服务中代码片段的永久链接。
+这类链接适用于分享特定提交中某文件的指定行或行范围。
+您可以通过以下方式触发此操作：在[命令面板](./getting-started.md#command-palette)中搜索`permalink`；
+创建[custom key bindings](key-bindings.md#custom-key-bindings)绑定至`editor::CopyPermalinkToLine`或`editor::OpenPermalinkToLine`操作；
 或直接在编辑器中选中行后右键点击选择`Copy Permalink`。
 
 ## 差异区块快捷键
