@@ -51,14 +51,14 @@
 "buffer_font_size": 15,                 // 编辑器缓冲区的字体大小
 "buffer_font_weight": 400,              // CSS单位制的字体粗细 [100-900]
 // 行高 "舒适" (1.618)、"标准" (1.3) 或自定义：`{ "custom": 2 }`
-"buffer_line_height": "舒适",
+"buffer_line_height": "comfortable",
 
 // 终端字体设置
 "terminal": {
   "font_family": "",
   "font_size": 15,
   // 终端行高：舒适 (1.618)、标准 (1.3) 或 `{ "custom": 2 }`
-  "line_height": "标准",
+  "line_height": "standard",
 },
 
 // 代理面板字体设置
@@ -129,25 +129,25 @@ For example `=>` will be displayed as `→` and `!=` will be `≠`。这纯粹�
   // 而非操作系统原生提示框（false）。在 Linux 系统上此设置会被忽略（始终为 false）。
   "use_system_prompts": true,
 
-// 活动窗格样式设置
-"active_pane_modifiers": {
+  // 活动窗格样式设置
+  "active_pane_modifiers": {
     // 活动窗格的内嵌边框尺寸，单位为像素
     "border_size": 0.0,
     // 非活动窗格的不透明度。0表示完全透明，1表示完全不透明
     "inactive_opacity": 1.0
-},
+  },
 
-// 底部停靠栏的布局模式：contained（内嵌）、full（全宽）、left_aligned（左对齐）、right_aligned（右对齐）
-"bottom_dock_layout": "contained",
+  // 底部停靠栏的布局模式：contained（内嵌）、full（全宽）、left_aligned（左对齐）、right_aligned（右对齐）
+  "bottom_dock_layout": "contained",
 
-// 调整停靠栏大小时是否同时调整其中所有面板的大小
-// 可设置为"left"、"right"和"bottom"的组合
-"resize_all_panels_in_dock": ["left"]
+  // 调整停靠栏大小时是否同时调整其中所有面板的大小
+  // 可设置为"left"、"right"和"bottom"的组合
+  "resize_all_panels_in_dock": ["left"]
 }
 ```
 
 <!--TBD: Centered layout related settings
-```json [设置]
+```json [settings]
     "centered_layout": {
     // 使用居中布局时，中央窗格左侧相对于工作区的相对宽度
     "left_padding": 0.2,
@@ -159,57 +159,58 @@ For example `=>` will be displayed as `→` and `!=` will be `≠`。这纯粹�
 ## 编辑器
 
 `json [settings]
-  // Whether the cursor blinks in the editor.
-  "cursor_blink": true,
+// Whether the cursor blinks in the editor.
+"cursor_blink": true,
 
-  // Cursor shape for the default editor: bar, block, underline, hollow
-  "cursor_shape": null,
+// Cursor shape for the default editor: bar, block, underline, hollow
+"cursor_shape": null,
 
-  // Highlight the current line in the editor: none, gutter, line, all
-  "current_line_highlight": "all",
+// Highlight the current line in the editor: none, gutter, line, all
+"current_line_highlight": "all",
 
-  // When does the mouse cursor hide: never, on_typing, on_typing_and_movement
-  "hide_mouse": "on_typing_and_movement",
+// When does the mouse cursor hide: never, on_typing, on_typing_and_movement
+"hide_mouse": "on_typing_and_movement",
 
-  // Whether to highlight all occurrences of the selected text in an editor.
-  "selection_highlight": true,
+// Whether to highlight all occurrences of the selected text in an editor.
+"selection_highlight": true,
 
-  // Visually show tabs and spaces  (none, all, selection, boundary, trailing)
-  "show_whitespaces": "selection",
-  "whitespace_map": { // Which characters to show when `显示空白字符` 已启用
-    "空格": "•",
-    "制表符": "→"
-  },
+// Visually show tabs and spaces (none, all, selection, boundary, trailing)
+"show_whitespaces": "selection",
+"whitespace_map": { // Which characters to show when `显示空白字符` 已启用
+"空格": "•",
+"制表符": "→"
+},
 
-  "无用代码淡化": 0.3, // 未使用代码的淡化程度
+"无用代码淡化": 0.3, // 未使用代码的淡化程度
 
-  // 在私有文件中隐藏变量值的视觉显示
-  "屏蔽私有值": false,
+// 在私有文件中隐藏变量值的视觉显示
+"屏蔽私有值": false,
 
 // 软换行与标尺设置
-"soft_wrap": "none",          // 换行模式：不换行、编辑器宽度、首选行长度、边界换行
-"preferred_line_length": 80,  // 软换行基准列数
-"show_wrap_guides": true,     // 显示/隐藏换行参考线（垂直标尺）
-"wrap_guides": [],            // 换行参考线位置设置（字符计数）
+"soft_wrap": "none", // 换行模式：不换行、编辑器宽度、首选行长度、边界换行
+"preferred_line_length": 80, // 软换行基准列数
+"show_wrap_guides": true, // 显示/隐藏换行参考线（垂直标尺）
+"wrap_guides": [], // 换行参考线位置设置（字符计数）
 
 // 边栏设置
 "gutter": {
-    "line_numbers": true,         // 在边栏显示/隐藏行号
-    "runnables": true,            // 在边栏显示/隐藏可运行按钮
-    "breakpoints": true,          // 在边栏显示/隐藏断点标记
-    "folds": true,                // 在边栏显示/隐藏折叠按钮
-    "min_line_number_digits": 4   // 为行号保留的最小数字位数
+"line_numbers": true, // 在边栏显示/隐藏行号
+"runnables": true, // 在边栏显示/隐藏可运行按钮
+"breakpoints": true, // 在边栏显示/隐藏断点标记
+"folds": true, // 在边栏显示/隐藏折叠按钮
+"min_line_number_digits": 4 // 为行号保留的最小数字位数
 },
 "relative_line_numbers": false, // 在边栏显示相对行号
 
 // 缩进参考线
 "indent_guides": {
-  "enabled": true,                    // 是否启用
-  "line_width": 1,                    // 参考线宽度（像素）[1-10]
-  "active_line_width": 1,             // 当前活动行参考线宽度（像素）[1-10]
-  "coloring": "fixed",                // 着色方式：禁用、固定、根据缩进智能着色
-  "background_coloring": "disabled"   // 背景着色：禁用、根据缩进智能着色
+"enabled": true, // 是否启用
+"line_width": 1, // 参考线宽度（像素）[1-10]
+"active_line_width": 1, // 当前活动行参考线宽度（像素）[1-10]
+"coloring": "fixed", // 着色方式：禁用、固定、根据缩进智能着色
+"background_coloring": "disabled" // 背景着色：禁用、根据缩进智能着色
 }
+
 ```
 
 ### Git Blame {#editor-blame}
@@ -217,14 +218,14 @@ For example `=>` will be displayed as `→` and `!=` will be `≠`。这纯粹�
 ```
 
 "git": {
-  "inline_blame": {
-    "enabled": true,                  // 显示/隐藏行内代码追溯
-    "delay_ms": 0,                    // 延迟显示时间（毫秒）
-    "min_column": 0,                  // 行内显示追溯信息的最小列数
-    "padding": 7,                     // 代码与行内追溯信息之间的间距（em单位）
-    "show_commit_summary": false      // 显示/隐藏提交摘要
-  },
-  "hunk_style": "staged_hollow"       // 代码块样式：暂存区空心、未暂存区空心
+"inline_blame": {
+"enabled": true, // 显示/隐藏行内代码追溯
+"delay_ms": 0, // 延迟显示时间（毫秒）
+"min_column": 0, // 行内显示追溯信息的最小列数
+"padding": 7, // 代码与行内追溯信息之间的间距（em单位）
+"show_commit_summary": false // 显示/隐藏提交摘要
+},
+"hunk_style": "staged_hollow" // 代码块样式：暂存区空心、未暂存区空心
 }
 
 ### 编辑器工具栏
@@ -242,7 +243,7 @@ For example `=>` will be displayed as `→` and `!=` will be `≠`。这纯粹�
 
 ### 编辑器滚动条与缩略图 {#editor-scrollbar}
 
-```json [设置]
+```json [settings]
   // 滚动条相关设置
   "scrollbar": {
     // 在编辑器中何时显示滚动条（自动，系统，总是，从不）
@@ -283,7 +284,7 @@ For example `=>` will be displayed as `→` and `!=` will be `≠`。这纯粹�
 
 ### Editor Tabs
 
-```
+````
 // 每个窗格的最大标签页数量。未设置表示无限制。
 "max_tabs": null,
 
@@ -321,7 +322,7 @@ For example `=>` will be displayed as `→` and `!=` will be `≠`。这纯粹�
     // Button is not shown if "enable_language_server" if false.
     "button": true
   },
-```
+````
 
 ### 多缓冲区
 
@@ -385,21 +386,21 @@ For example `=>` will be displayed as `→` and `!=` will be `≠`。这纯粹�
     // 滚动后等待请求提示的时间（设为0可取消防抖延迟）
     "scroll_debounce_ms": 50,
 
-// 一组修饰键，按下时将切换行内提示的可见性。
-"toggle_on_modifiers_press": {
-  "control": false,
-  "shift": false,
-  "alt": false,
-  "platform": false,
-  "function": false
-}
-}
+    // 一组修饰键，按下时将切换行内提示的可见性。
+    "toggle_on_modifiers_press": {
+      "control": false,
+      "shift": false,
+      "alt": false,
+      "platform": false,
+      "function": false
+    }
+  }
 }
 ```
 
 ## File Finder
 
-```
+````
 
 // 文件查找器设置
 "file_finder": {
@@ -442,7 +443,7 @@ For example `=>` will be displayed as `→` and `!=` will be `≠`。这纯粹�
     // Whether to hide the hidden entries in the project panel.
     "hide_hidden": false
   }
-```
+````
 
 ## 代理面板
 
@@ -470,35 +471,36 @@ For example `=>` will be displayed as `→` and `!=` will be `≠`。这纯粹�
     "default_width": 640,               // 默认宽度（左右停靠时）
     "default_height": 320,              // 默认高度（底部停靠时）
 
-// 设置终端光标闪烁行为（开启、关闭、终端控制）
-"blinking": "terminal_controlled",
-// 终端光标的默认形状（方块、竖线、下划线、空心）
-"cursor_shape": "方块",
+  // 设置终端光标闪烁行为（开启、关闭、终端控制）
+  "blinking": "terminal_controlled",
+  // 终端光标的默认形状（方块、竖线、下划线、空心）
+  "cursor_shape": "block",
 
-// 要添加到终端进程环境的环境变量
-"env": {
-  // "键": "值"
-},
+  // 要添加到终端进程环境的环境变量
+  "env": {
+    // "键": "值"
+  },
 
-// 终端滚动条设置
-"scrollbar": {
-  "show": null                       // 显示/隐藏：（自动、系统、始终、从不）
-},
-// 终端字体设置
-"font_family": "Fira Code",
-"font_size": 15,
-"font_weight": 400,
-// 终端行高：舒适（1.618）、标准（1.3）或`{ "custom": 2 }`
-"line_height": "舒适",
+  // 终端滚动条设置
+  "scrollbar": {
+    "show": null                       // 显示/隐藏：（自动、系统、始终、从不）
+  },
+  // 终端字体设置
+  "font_family": "Fira Code",
+  "font_size": 15,
+  "font_weight": 400,
+  // 终端行高：舒适（1.618）、标准（1.3）或`{ "custom": 2 }`
+  "line_height": "comfortable",
 
-"max_scroll_history_lines": 10000,   // 回滚历史记录（0=禁用，最大值=100000）
+  "max_scroll_history_lines": 10000,   // 回滚历史记录（0=禁用，最大值=100000）
+  }
 ```
 
 更多非视觉自定义选项请参阅[终端设置](./configuring-zed.md#terminal)。
 
 ### 其他面板
 
-```json [设置]
+```json [settings]
   // Git 面板
   "git_panel": {
     "button": true,               // 显示/隐藏状态栏图标
@@ -535,6 +537,7 @@ For example `=>` will be displayed as `→` and `!=` will be `≠`。这纯粹�
     "show": null                // 显示/隐藏：（自动、系统、始终、从不）
   }
 }
+```
 
 ## 协作面板
 
