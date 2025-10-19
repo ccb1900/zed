@@ -1,0 +1,102 @@
+# YAML
+
+Zed 原生支持 YAML 格式。
+
+- 语法分析器：[zed-industries/tree-sitter-yaml](https://github.com/zed-industries/tree-sitter-yaml)
+- 语言服务器：[redhat-developer/yaml-language-server](https://github.com/redhat-developer/yaml-language-server)
+
+## 配置
+
+您可以通过在 Zed 的 settings.json 文件中添加 `yaml-language-server` 代码块，并在 `lsp` 键下配置各项 [yaml-language-server 设置](https://github.com/redhat-developer/yaml-language-server?tab=readme-ov-file#language-server-settings)。例如：
+
+```json [settings]
+  "lsp": {
+    "yaml-language-server": {
+      "settings": {
+        "yaml": {
+          "keyOrdering": true,
+          "format": {
+            "singleQuote": true
+          },
+          "schemas": {
+              "http://json.schemastore.org/composer": ["/*"],
+              "../relative/path/schema.json": ["/config*.yaml"]
+          }
+        }
+      }
+    }
+  }
+```
+
+请注意，设置键必须嵌套，因此 `yaml.keyOrdering` 变为 `{"yaml": { "keyOrdering": true }}`。
+
+## 格式化
+
+默认情况下，Zed 使用 Prettier 来格式化 YAML 文件。
+
+### Prettier 格式化
+
+您可以自定义 Prettier 的格式化行为。例如，要在 YAML 文件中使用单引号，请将以下内容添加到您的 `.prettierrc` 配置文件中：
+
+```json [settings]
+{
+  "overrides": [
+    {
+      "files": ["*.yaml", "*.yml"],
+      "options": {
+        "singleQuote": false
+      }
+    }
+  ]
+}
+```
+
+### yaml-language-server 格式化
+
+如果要在 YAML 格式化中使用 `yaml-language-server` 而非 Prettier，请将以下内容添加到您的 Zed `settings.json` 中：
+
+```json [settings]
+  "languages": {
+    "YAML": {
+      "formatter": "language_server"
+    }
+  }
+```
+
+## 模式
+
+默认情况下，yaml-language-server 会尝试为给定的 YAML 文件确定正确的模式，并从 [Json Schema Store](https://schemastore.org/) 获取相应的 JSON 模式。
+
+您可以通过 `schemas` 设置键（如上所示）或通过在 YAML 文件顶部使用模式行注释提供[内联模式](https://github.com/redhat-developer/yaml-language-server#using-inlined-schema)引用来覆盖任何自动检测到的模式：
+
+```yaml
+# yaml-language-server: $schema=https://json.schemastore.org/github-action.json
+name: Issue Assignment
+on:
+  issues:
+    types: [oppened]
+```
+
+如果需要，您可以禁用从 JSON 模式自动检测和检索模式的功能：
+
+```json [settings]
+  "lsp": {
+    "yaml-language-server": {
+      "settings": {
+        "yaml": {
+          "schemaStore": {
+            "enable": false
+          }
+        }
+      }
+    }
+  }
+```
+
+## 自定义标签
+
+Yaml-language-server 支持[自定义标签](https://github.com/redhat-developer/yaml-language-server#adding-custom-tags)，可用于在运行时将自定义应用程序功能注入到您的 YAML 文件中。
+
+例如，Amazon CloudFormation YAML 使用了多个自定义标签，为支持这些标签，您可将以下内容添加至 settings.json 文件中：
+
+[[代码块_0]]
