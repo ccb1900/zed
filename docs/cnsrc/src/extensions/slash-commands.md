@@ -1,70 +1,137 @@
 # 斜杠命令
 
-扩展程序可为助手提供斜杠命令功能。
+扩展可以为助手提供斜杠命令功能。
 
-## 扩展程序示例
+## 示例扩展
 
-若想查看实现斜杠命令功能的完整扩展示例，请参阅 [[[代码块1]] 扩展](https://github.com/zed-industries/zed/tree/main/extensions/slash-commands-example)。
+如需查看提供斜杠命令功能的实际扩展示例，请参阅 [`slash-commands-example` 扩展](https://github.com/zed-industries/zed/tree/main/extensions/slash-commands-example)。
 
-如需亲身体验，您可[将其作为开发扩展进行安装](./developing-extensions.md#developing-an-extension-locally)。
+若想亲自试用，您可以将此扩展[作为开发扩展安装](./developing-extensions.md#developing-an-extension-locally)。
 
 ## 定义斜杠命令
 
-单个扩展程序可提供一个或多个斜杠命令。每个斜杠命令必须在 [[代码块2]] 中完成注册。
+单个扩展可以提供一个或多个斜杠命令。每个斜杠命令都必须在 `extension.toml` 中注册。
 
-以下示例展示了一个提供两个斜杠命令（[[代码块3]] 和 [[代码块4]]）的扩展程序：
+例如，以下是一个提供两个斜杠命令的扩展：`/echo` 和 `/pick-one`：
 
-[[代码块0]]
+```toml
+[slash_commands.echo]
+description = "echoes the provided input"
+requires_argument = true
 
-每个斜杠命令可定义以下属性：
+[slash_commands.pick-one]
+description = "pick one of three options"
+requires_argument = true
+```
 
-- [[代码块0]]：用于在列出可用命令时显示斜杠命令的描述信息。
-- [[代码块1]]：标识该斜杠命令是否需要至少一个参数才能执行。
+每个斜杠命令可以定义以下属性：
 
-## 实现斜杠命令功能
+- `description`：描述斜杠命令的文本，将在显示可用命令时展示。
+- `requires_argument`：指示斜杠命令是否需要至少一个参数才能运行。
 
-要为斜杠命令实现具体功能，请为您的扩展程序实现[[代码块2]]方法。
+## 实现斜杠命令行为
 
-该方法接收将被执行的斜杠命令、传递给它的参数列表，以及一个可选的[[代码块3]]。
+要为斜杠命令实现具体行为，请为您的扩展程序实现`run_slash_command`方法。
 
-该方法返回[[代码块4]]，其中包含命令的文本输出，存储在[[代码块5]]字段中。输出内容还可以定义[[代码块6]]，这些部分包含指向输出的范围索引。随后，这些区间将在助手上下文编辑器中呈现为折叠区块。
+该方法接收待执行的斜杠命令、传递给命令的参数列表，以及一个可选的`Worktree`参数。
 
-您的扩展程序应当根据命令名称（不包含前导[[代码块8]]）执行[[代码块7]]操作，并据此执行相应功能：
+该方法返回`SlashCommandOutput`对象，其中`text`字段包含命令的文本输出。输出还可以定义包含输出文本范围的`SlashCommandOutputSection`区块，这些区块将在助手上下文编辑器中呈现为可折叠区域。
 
-实现 zed 扩展时，对于 MyExtension 结构体：
+您的扩展程序应当根据命令名称（不包含前导`/`符号）执行`match`操作，并据此执行相应行为：
 
-当执行斜杠命令时，函数会接收命令对象、参数列表和可选的工作树信息。根据命令名称进行匹配处理：
+```rs
+为 MyExtension 实现 zed::Extension {
+    运行斜杠命令(
+        &自身,
+        命令: 斜杠命令,
+        参数: 向量<String>,
+        _工作树: 可选<&Worktree>,
+    ) -> 结果<SlashCommandOutput, String> {
+        匹配 命令.名称.作为字符串() {
+            "echo" => {
+                如果 参数.是空的() {
+                    返回 错误("没有内容可回显".转换为字符串());
+                }
 
-对于 "echo" 命令：
-- 若参数为空，返回错误提示"无内容可回显"
-- 否则将参数拼接为文本，生成命令输出结果，包含文本内容和标记范围
+                让 文本 = 参数.连接(" ");
 
-对于 "pick-one" 命令：
-- 若无参数传入，返回错误提示"未选择任何选项"
-- 后续处理逻辑...
+                确定(斜杠命令输出 {
+                    部分: 向量![斜杠命令输出部分 {
+                        范围: (0..文本.长度()).转换(),
+                        标签: "回显".转换为字符串(),
+                    }],
+                    文本,
+                })
+            }
+            "pick-one" => {
+                让 某(选择项) = 参数.首个() 否则 {
+                    返回 错误("未选择任何选项".转换为字符串());
+                };
 
-当匹配到选择字符串时：
-如果是"选项1"、"选项2"或"选项3"，则继续执行。
-若为无效选项，则返回错误提示："该选项无效"。
+匹配选择项字符串时：
+    "选项1" | "选项2" | "选项3" => {}
+    无效选项 => {
+        返回错误(格式化!("{无效选项} 不是有效选项"));
+    }
 
-随后生成文本："您选择了该选项。"
+让文本 = 格式化!("您选择了 {选择项}。");
 
-返回包含以下内容的输出结果：
-- 分段信息：显示范围及标签"请选择：选项内容"
-- 文本内容
+确定(斜杠命令输出 {
+    部分: 向量![斜杠命令输出部分 {
+        范围: (0..文本.长度()).转换(),
+        标签: 格式化!("选择一项: {选择项}"),
+    }],
+    文本,
+})
+}
+命令 => 错误(格式化!("未知斜杠命令: \"{命令}\"")),
+}
+}
+}
+```
 
-若遇到未知命令，则返回错误："未知斜杠命令"。
+## Auto-completing slash command arguments
 
-通过实现`complete_slash_command_argument`方法可为斜杠命令提供自动补全功能。
+For slash commands that have arguments, you may also choose to implement `完成斜杠命令参数` 来为您的斜杠命令提供补全建议。
 
-该方法接收待执行的斜杠命令及其参数列表，返回将在自动补全菜单中显示的`SlashCommandArgumentCompletion`列表。
+该方法接收将要运行的斜杠命令及其参数列表，并返回将在自动补全菜单中显示的`SlashCommandArgumentCompletion`列表。
 
 每个`SlashCommandArgumentCompletion`包含以下属性：
 
-- `label`：显示在补全菜单中的标签文字
-- `new_text`：确认补全时插入的文本内容
-- `run_command`：确认补全时是否立即执行该斜杠命令
+- `label`：显示在补全菜单中的标签文本
+- `new_text`：接受补全时将被插入的文本内容
+- `run_command`：布尔值，表示接受补全时是否执行该斜杠命令
 
-需要特别注意的是，您的扩展程序应当基于命令名称（不包含前导`/`）进行`match`处理，并返回相应的参数补全建议。
+需要特别注意的是，您的扩展程序应当基于命令名称（不包含前导`/`）进行`match`处理，并返回所需的参数补全结果：
 
-[[代码块_0]]
+```rs
+impl zed::Extension for MyExtension {
+    fn complete_slash_command_argument(
+        &self,
+        command: SlashCommand,
+        _args: Vec<String>,
+    ) -> Result<Vec<SlashCommandArgumentCompletion>, String> {
+        match command.name.as_str() {
+            "echo" => Ok(vec![]),
+            "pick-one" => Ok(vec![
+                SlashCommandArgumentCompletion {
+                    label: "Option One".to_string(),
+                    new_text: "option-1".to_string(),
+                    run_command: true,
+                },
+                SlashCommandArgumentCompletion {
+                    label: "Option Two".to_string(),
+                    new_text: "option-2".to_string(),
+                    run_command: true,
+                },
+                SlashCommandArgumentCompletion {
+                    label: "Option Three".to_string(),
+                    new_text: "option-3".to_string(),
+                    run_command: true,
+                },
+            ]),
+            command => Err(format!("unknown slash command: \"{command}\"")),
+        }
+    }
+}
+```
