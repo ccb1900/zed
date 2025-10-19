@@ -146,8 +146,7 @@ For example `=>` will be displayed as `→` and `!=` will be `≠`。这纯粹�
 }
 ```
 
-<!--
-TBD: Centered layout related settings
+<!--TBD: Centered layout related settings
 ```json [设置]
     "centered_layout": {
     // 使用居中布局时，中央窗格左侧相对于工作区的相对宽度
@@ -155,7 +154,7 @@ TBD: Centered layout related settings
     // 使用居中布局时，中央窗格右侧相对于工作区的相对宽度
     "right_padding": 0.2
     },
-```
+```-->
 
 ## 编辑器
 
