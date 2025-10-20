@@ -9,15 +9,17 @@ runs:
       with:
         mdbook-version: "0.4.37"
 
-    - name: Cache dependencies
+    - name: Rust Cache
       uses: swatinem/rust-cache@v2
       with:
-        # 只在dev分支使用缓存（包括恢复和保存）
-        shared-key: ${{ github.workflow }}-dev-${{ hashFiles('**/Cargo.lock') }}
-        key: ${{ runner.os }}-rust-dev-${{ hashFiles('**/Cargo.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-rust-dev-
-        save-if: ${{ github.ref == 'refs/heads/dev' }}
+        # 核心参数（必须）
+        key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+        
+        # 多分支共享缓存（推荐）
+        shared-key: ${{ github.workflow }}-${{ hashFiles('**/Cargo.lock') }}
+        
+        # 可选参数
+        save-if: ${{ github.ref == 'refs/heads/dev' }}  # 仅dev分支保存缓存
 
     - name: Install Linux dependencies
       shell: bash -euxo pipefail {0}
