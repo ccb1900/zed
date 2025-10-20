@@ -7,7 +7,7 @@ on:
 
 jobs:
   deploy-docs:
-    name: Deploy Docs
+    name: Deploy Docs1
     # if: github.repository_owner == 'zed-industries'
     runs-on: ubuntu-latest
 
