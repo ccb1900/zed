@@ -10,10 +10,14 @@ runs:
         mdbook-version: "0.4.37"
 
     - name: Cache dependencies
-      uses: swatinem/rust-cache@9d47c6ad4b02e050fd481d890b2ea34778fd09d6 # v2
+      uses: swatinem/rust-cache@v2
       with:
+        # 只在dev分支使用缓存（包括恢复和保存）
+        shared-key: ${{ github.workflow }}-dev-${{ hashFiles('**/Cargo.lock') }}
+        key: ${{ runner.os }}-rust-dev-${{ hashFiles('**/Cargo.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-rust-dev-
         save-if: ${{ github.ref == 'refs/heads/dev' }}
-        # cache-provider: "buildjet"
 
     - name: Install Linux dependencies
       shell: bash -euxo pipefail {0}
